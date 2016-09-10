@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: site-head">
+    <title>Create Post</title>
+</head>
+
+<body>
+<header th:replace="layout :: site-header" /><!--Layout-->
+
+<h1>Login in the Blog</h1>
+
+<form method="post" th:object="${createPostForm}"><!--pass the data to loginForm model -->
+    <div><label for="title">Title:</label></div><!--label tag is important here, because loginForm model
+                                                          must know what is this input-->
+    <input id="title" type="text" name="title" th:value="*{title}" /><!--pass title "*",
+    the th:value is for this field to remember the input, even if there is an error. Other case, if th:value is missing
+     if we have an error the typed data in this field will be gone-->
+    <span class="formError" th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}">Invalid title</span><!--Check for errors in LoginForm(/forms)
+                                                            or authentications in UserService(/services)
+                                                             if the th:if is gone this msg will be permanent displayed-->
+    <div><label for="body">Body:</label></div>
+    <textarea id="body" rows="10" type="text" name="body" th:value="*{body}" /><!--pass password...-->
+    <span class="formError" th:if="${#fields.hasErrors('body')}"
+          th:errors="*{body}">Invalid body</span>
+
+    <input type="submit" value="Create"/>
+
+</form>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+</html>
